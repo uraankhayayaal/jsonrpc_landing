@@ -9,8 +9,8 @@ abstract class ApiService {
     const JSON_RPC_VERSION = "2.0";
     const JSON_RPC_ENDPOINT = 'http://activity.loc/json-rpc';
 
-    public $method;
-    public $params;
+    public $method = null;
+    public $params = null;
 
     public function send()
     {
@@ -19,12 +19,15 @@ abstract class ApiService {
 
     public function wrapData()
     {
-        return [
+        $data = [
             "jsonrpc" => self::JSON_RPC_VERSION,
             "method" => $this->method,
-            "params" => $this->params,
             "id" => 1
         ];
+        if($this->params !== null){
+            $data["params"] = $this->params;
+        }
+        return $data;
     }
     
     public function query()
@@ -45,7 +48,7 @@ abstract class ApiService {
         return $response->data;
     }
 
-    public function setMethod(array $method)
+    public function setMethod(string $method)
     {
         $this->method = $method;
     }
