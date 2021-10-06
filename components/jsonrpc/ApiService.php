@@ -7,7 +7,7 @@ use yii\httpclient\Client;
 abstract class ApiService {
 
     const JSON_RPC_VERSION = "2.0";
-    const JSON_RPC_ENDPOINT = 'http://activity.kazandev.u0258205.cp.regruhosting.ru/json-rpc';
+    const JSON_RPC_ENDPOINT = 'http://activity.loc/json-rpc';
 
     public $method = null;
     public $params = null;
