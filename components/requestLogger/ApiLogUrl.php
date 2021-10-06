@@ -20,8 +20,10 @@ class ApiLogUrl extends ApiService
         $this->setMethod("api1.logger.show-logs");
         $this->setParams(['limit' => self::PAGE_SIZE, 'offset' => (\Yii::$app->request->get('page', 1) * self::PAGE_SIZE - self::PAGE_SIZE)]);
 
-        $models =       $this->query()['result']['models'];
-        $totalCount =   $this->query()['result']['totalCount'];
+        $data = $this->query();
+
+        $models =       $data['result']['models'];
+        $totalCount =   $data['result']['totalCount'];
 
         $pages = new Pagination(['totalCount' => $totalCount, 'defaultPageSize' => self::PAGE_SIZE]);
 
