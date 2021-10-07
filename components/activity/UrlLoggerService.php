@@ -1,19 +1,14 @@
 <?php
 
-namespace app\components\requestLogger;
+namespace app\components\activity;
 
 use app\components\jsonrpc\ApiService;
 use yii\data\ArrayDataProvider;
 use yii\data\Pagination;
 
-class ApiLogUrl extends ApiService
+class UrlLoggerService extends ApiService
 {
     const PAGE_SIZE = 20;
-    public function send()
-    {
-        $this->setMethod("api1.logger.save-log");
-        return $this->query();
-    }
 
     public function getDataProvider()
     {
@@ -22,8 +17,8 @@ class ApiLogUrl extends ApiService
 
         $data = $this->query();
 
-        $models =       $data['result']['models'];
-        $totalCount =   $data['result']['totalCount'];
+        $models = $data['result']['models'];
+        $totalCount = $data['result']['totalCount'];
 
         $pages = new Pagination(['totalCount' => $totalCount, 'defaultPageSize' => self::PAGE_SIZE]);
 

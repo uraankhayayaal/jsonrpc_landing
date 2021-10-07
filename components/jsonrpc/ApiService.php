@@ -2,20 +2,15 @@
 
 namespace app\components\jsonrpc;
 
+use Yii;
 use yii\httpclient\Client;
 
 abstract class ApiService {
 
     const JSON_RPC_VERSION = "2.0";
-    const JSON_RPC_ENDPOINT = 'http://activity.loc/json-rpc';
 
     public $method = null;
     public $params = null;
-
-    public function send()
-    {
-        return $this->query();
-    }
 
     public function wrapData()
     {
@@ -38,7 +33,7 @@ abstract class ApiService {
         $response = $client->createRequest()
             ->setFormat(Client::FORMAT_JSON)
             ->setMethod('POST')
-            ->setUrl(self::JSON_RPC_ENDPOINT)
+            ->setUrl(Yii::$app->params['jsonrpcUrl'])
             ->setData($data)
             ->send();
         if ($response->isOk) {

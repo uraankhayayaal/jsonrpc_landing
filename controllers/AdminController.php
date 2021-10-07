@@ -2,10 +2,7 @@
 
 namespace app\controllers;
 
-use app\components\requestLogger\ApiLogUrl;
-use app\models\LogSearch;
-use Yii;
-use yii\data\ArrayDataProvider;
+use app\components\activity\UrlLoggerService;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -18,21 +15,24 @@ class AdminController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
+            /*
+             * Раскомментировать когда появится метод авторизации
+             */
+            // 'access' => [
+            //     'class' => AccessControl::className(),
+            //     'only' => ['activity'],
+            //     'rules' => [
+            //         [
+            //             'actions' => ['activity'],
+            //             'allow' => true,
+            //             'roles' => ['@'],
+            //         ],
+            //     ],
+            // ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'activity' => ['get'],
                 ],
             ],
         ];
@@ -61,8 +61,8 @@ class AdminController extends Controller
      */
     public function actionActivity()
     {
-        $data = new ApiLogUrl();
-        $dataProvider = $data->getDataProvider();
+        $urlLogService = new UrlLoggerService();
+        $dataProvider = $urlLogService->getDataProvider();
 
         return $this->render('activity', [
             'dataProvider' => $dataProvider['models'],

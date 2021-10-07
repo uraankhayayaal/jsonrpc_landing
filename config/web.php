@@ -1,6 +1,6 @@
 <?php
 
-use app\components\requestLogger\EventHandlerComponent;
+use app\components\activity\UrlEventHandler;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -59,7 +59,7 @@ $config = [
         ],
     ],
     'on beforeRequest' => function ($event) {
-        EventHandlerComponent::sendLog();
+        UrlEventHandler::sendLog();
     },
     'params' => $params,
 ];

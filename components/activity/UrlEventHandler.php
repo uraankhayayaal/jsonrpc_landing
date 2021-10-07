@@ -1,28 +1,30 @@
 <?php
 
-namespace app\components\requestLogger;
+namespace app\components\activity;
 
 use yii\base\Behavior;
 use yii\base\Component;
 use yii\db\ActiveRecord;
 
-class EventHandlerComponent
+class UrlEventHandler
 {
     public $url;
     public $datetime;
-    public $apiLoggerData;
+    public $urlLoggerService;
 
     public function __construct()
     {
         $this->url = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         $this->datetime = time();
-        $this->apiLoggerData =new ApiLogUrl();
+        $this->urlLoggerService =new UrlLoggerService();
     }
 
     public function sendData()
     {
-        $this->apiLoggerData->setParams(['url' => $this->url, 'datetime' => $this->datetime]);
-        return $this->apiLoggerData->send();
+        $this->urlLoggerService->setMethod("api1.logger.save-log");
+        $this->urlLoggerService->setParams(['url' => $this->url, 'datetime' => $this->datetime]);
+        
+        return $this->urlLoggerService->query();
     }
 
     static public function sendLog()
